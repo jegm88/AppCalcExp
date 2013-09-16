@@ -2,19 +2,29 @@
 var p = new Pila();
 var resultado;
 var pos;
+var msgError = 'Error en la expresion';
 // Métodos
 function calcularExpresion(exp){
-    return calcular(infija2Postfija(exp)).toString().replace("e+","*10^");
+    var res = 'NaN';
+    try{
+        p = new Pila();
+        res = calcular(infija2Postfija(exp)).toString().replace("e+","*10^");
+    }catch(error){
+        alert(error);
+    }
+    return res;
 }
 
 function calcular (expPos) {
     for (var i = 0; i < expPos.length; i++) {
         if (expPos[i].toLowerCase() == '+') {
+            if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
             var res = sumar(num1,num2);
             p.poner(res);
         }else if(expPos[i].toLowerCase() == '-') {
+            if(p.v.length < 1) throw (msgError);
             var num1 = Number(p.quitar());
             var num2;
             if(p.vacia()){
@@ -26,42 +36,56 @@ function calcular (expPos) {
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == '*') {
+            alert(p.v);
+            if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
             var res = multiplicar(num1,num2);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == '/') {
+            if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
             var res = dividir(num1,num2);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == '^') {
+            if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
             var res = pot(num2,num1);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'sqrt') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = sqrt(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'xsqrt') {
+            if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
             var res = xsqrt(num1,num2);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'ln') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = ln(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'log') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = log(num);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'abs') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = abs(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'e') {
@@ -73,36 +97,43 @@ function calcular (expPos) {
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'sin') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = sin(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'cos') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = cos(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'tan') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = tan(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'asin') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = asin(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'acos') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = acos(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == 'atan') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.quitar());
             var res = atan(num);
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == '!') {
+            if(p.v.length < 1) throw (msgError);
             var num = Number(p.cima());
             var res = fact(num);
             p.quitar();
@@ -134,6 +165,9 @@ function sqrt (num) {
     return Math.sqrt(num);
 }
 
+function abs (num) {
+    return Math.abs(num);
+}
 
 function ln (num) {
     return Math.log(num);
@@ -145,7 +179,7 @@ function log(num) {
 
 function dividir (num1,num2) {
     if (num2 == 0) {
-        alert("error division por cero");
+        throw ("error division por cero");
         return 0;
     }else{
         return num2 / num1;

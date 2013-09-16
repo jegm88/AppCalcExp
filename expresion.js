@@ -4,9 +4,10 @@ var expPostfija;
 var expInfija;
 
 var operadores = ['+','-','*','/','^'];
-var funciones = ['sqrt','xsqrt','ln','log','sin','cos','tan','asin','acos','atan','!'];
+var funciones = ['sqrt','xsqrt','ln','log','abs','sin','cos','tan','asin','acos','atan','!'];
 var constantes = ['e','pi'];
-var prioridades = [0,0,1,1,2];
+var prioridades = [1,1,2,2,3];
+var priorfunciones = 4;
 
 function esOperador(op){
    for (var i = 0; i < operadores.length; i++) {
@@ -27,11 +28,15 @@ function esFuncion(fx){
 }
 
 function prioridad (c){
-   for (var i = 0; i < operadores.length; i++) {
-      if (operadores[i]===c){
-         return prioridades[i];
-      }
-   };
+   if(esOperador(c)){
+      for (var i = 0; i < operadores.length; i++) {
+         if (operadores[i]===c){
+            return prioridades[i];
+         }
+      };
+   }else if(esFuncion(c)){
+      return priorfunciones;
+   }
    return null;
 }
 
@@ -64,7 +69,7 @@ function infija2Postfija (expInfija){
                pos.poner(med.quitar());
             }
             med.quitar();
-         }else if(esOperador(c)){
+         }else if(esOperador(c)||esFuncion(c)){
             prioridadCima = prioridad(med.cima());
             prioridadOper = prioridad(c);
             while(!med.vacia() && (prioridadOper <= prioridadCima)){
@@ -72,14 +77,7 @@ function infija2Postfija (expInfija){
                prioridadCima = prioridad(med.cima());
             }
             med.poner(c);
-         }else if(esFuncion(c)){
-            prioridadCima = prioridad(med.cima());
-            while(!med.vacia() && (-1 <= prioridadCima)){
-               pos.poner(med.quitar());
-               prioridadCima = prioridad(med.cima());
-            }
-            med.poner(c);
-         }else{
+        }else{
             pos.poner(c);
          }
       }
@@ -90,5 +88,6 @@ function infija2Postfija (expInfija){
         expPos.push(med.quitar());
       }
    }
+   alert(expPos);
    return expPos;
 }

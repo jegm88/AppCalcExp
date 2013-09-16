@@ -19,7 +19,7 @@ var Pila = function(max){
     if(!this.llena()){
       this.v[++this.tope] = dato;
     }else{
-      alert("pila llena");
+      console.log('Pila llena');
     }
   }
 
@@ -28,7 +28,7 @@ var Pila = function(max){
     if(!this.vacia()){
       dato = this.v[this.tope--];
     }else{
-      alert("pila vacia"); 
+      console.log('Pila vacia');
     }
     return dato;
   }
