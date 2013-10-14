@@ -36,7 +36,6 @@ function calcular (expPos) {
             p.poner(res);
         }else
         if (expPos[i].toLowerCase() == '*') {
-            alert(p.v);
             if(p.v.length < 2) throw (msgError);
             var num1 = Number(p.quitar());
             var num2 = Number(p.quitar());
@@ -132,6 +131,42 @@ function calcular (expPos) {
             var res = atan(num);
             p.poner(res);
         }else
+        if (expPos[i].toLowerCase() == 'sind') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = sin(num*pi()/180);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'cosd') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = cos(num*pi()/180);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'tand') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = tan(num*pi()/180);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'asind') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = asin(num*pi()/180);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'acosd') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = acos(num*pi()/180);
+            p.poner(res);
+        }else
+        if (expPos[i].toLowerCase() == 'atand') {
+            if(p.v.length < 1) throw (msgError);
+            var num = Number(p.quitar());
+            var res = atan(num*pi()/180);
+            p.poner(res);
+        }else
         if (expPos[i].toLowerCase() == '!') {
             if(p.v.length < 1) throw (msgError);
             var num = Number(p.cima());
@@ -217,6 +252,7 @@ function acos (num){
 function atan (num){
     return Math.atan(num);
 }
+
 function fact (num){
     var f=1; 
     for (var i = 1; i <= num; i++) {

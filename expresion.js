@@ -4,7 +4,7 @@ var expPostfija;
 var expInfija;
 
 var operadores = ['+','-','*','/','^'];
-var funciones = ['sqrt','xsqrt','ln','log','abs','sin','cos','tan','asin','acos','atan','!'];
+var funciones = ['sqrt','xsqrt','ln','log','abs','sin','cos','tan','asin','acos','atan','sind','cosd','tand','asind','acosd','atand','!'];
 var constantes = ['e','pi'];
 var prioridades = [1,1,2,2,3];
 var priorfunciones = 4;
@@ -88,6 +88,5 @@ function infija2Postfija (expInfija){
         expPos.push(med.quitar());
       }
    }
-   alert(expPos);
    return expPos;
 }
